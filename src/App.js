@@ -12,10 +12,10 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Header></Header>
-          <Introduction></Introduction>
-          <MainPage></MainPage>
+        <CssBaseline />
+        <Header></Header>
+        <Introduction></Introduction>
+        <MainPage></MainPage>
     </ThemeProvider>
   );
 }

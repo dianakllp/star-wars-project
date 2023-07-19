@@ -4,16 +4,16 @@ import theme from "../theme";
 
 const Introduction = () => {
   return (
-    <div>
+    <>
       <ThemeProvider theme={theme}>
-      <Grid >
-          <Typography align="center">
-            Please choose one character and one planet to see the Star Wars films,
-            which they both were a part of
+        <Grid>
+          <Typography align={"center"} margin={"2rem"}>
+            Please choose one character and one planet to see <br/> the Star Wars 
+            films, which they both were a part of
           </Typography>
         </Grid>
       </ThemeProvider>
-    </div>
+    </>
   );
 };
 
