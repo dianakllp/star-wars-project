@@ -14,17 +14,7 @@ const CardList = (props) => {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Box
-          sx={{
-            width: "25.75rem",
-            borderRadius: "28px",
-            border: "2px solid #FFF;",
-            bgcolor: props.bgColor,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
+        <Box style={props.style} bgcolor={props.bgColor}>
           <Icon
             fontSize="medium"
             sx={{
@@ -40,6 +30,7 @@ const CardList = (props) => {
             variant="h5"
             lineHeight={"2rem"}
             letterSpacing={"0.01563rem"}
+            textAlign={"center"}
           >
             {props.header}
           </Typography>
@@ -62,15 +53,14 @@ const CardList = (props) => {
               marginBottom: "1rem",
             }}
           >
-            <FormControl>
-              <RadioGroup>
+            <FormControl sx={{ justifyContent: "end", alignContent: "end" }}>
+              <RadioGroup
+                sx={{ justifyContent: "end", alignContent: "end" }}
+                onChange={props.radioOnChangeHandler}
+              >
                 {props.itemsData.map((item, index) => {
                   return (
-                    <CardListItem
-                      key={index}
-                      name={item.name}
-                      // avatar={item.avatar}
-                    ></CardListItem>
+                    <CardListItem key={index} name={item.name}></CardListItem>
                   );
                 })}
               </RadioGroup>
