@@ -1,9 +1,9 @@
 import { Avatar, ThemeProvider, Radio, FormControlLabel } from "@mui/material";
 import theme from "../theme";
-import Avatars from "./Avatars";
 
 const CardListItem = (props) => {
   return (
+
     <div >
       <ThemeProvider theme={theme}>
         <Avatar

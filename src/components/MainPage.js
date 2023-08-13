@@ -7,6 +7,7 @@ import { IoPlanetOutline } from "react-icons/io5";
 import { LiaJediOrder } from "react-icons/lia";
 import { TbMovie } from "react-icons/tb";
 import { useState } from "react";
+import { getCharacterAvatarById, getPlanetAvatarById } from "./Avatars";
 
 const MainPage = () => {
   const charactersHeader = "Choose the character";
@@ -24,6 +25,8 @@ const MainPage = () => {
   const [selectedPlanet, setSelectedPlanet] = useState(null);
   const [moviesData, setMoviesData] = useState([]);
   const [moviesNames, setMoviesNames] = useState([]);
+  const [characterAvatar, setCharacterAvatar] = useState(null);
+  const [planetAvatar, setPlanetAvatar] = useState(null);
 
   let foundCharactersMovies = [];
   let foundPlanetsMovies = [];
@@ -35,7 +38,7 @@ const MainPage = () => {
     while (url) {
       const response = await fetch(url);
       const body = await response.json();
-      console.log(allData)
+      console.log(allData);
       allData = allData.concat(body.results);
       url = body.next;
     }
@@ -54,6 +57,23 @@ const MainPage = () => {
     }
     setPlanetsInfo(allData);
   }
+
+  const avatarHandler = () => {
+    const charAvatars = [];
+    const planetsAvatar = [];
+    for (let i = 0; i < charactersInfo.length; i++) {
+      if (charactersInfo[2].url) {
+        console.log(charactersInfo[2].url);
+        console.log(getCharacterAvatarById(charactersInfo[2].url)) // to jest miejsce, gdzie znajduję się zdjęcie 
+        charAvatars.push(readAsDataURL(getCharacterAvatarById(charactersInfo[2].url))); // do array nie mogę dodać 'miejsca', musze stringa dodać 
+      }
+      console.log(charAvatars);
+    }
+    setCharacterAvatar(charAvatars);
+
+    console.log(characterAvatar);
+    console.log(planetAvatar);
+  };
 
   const handleCharactersRadioChange = (event) => {
     setSelectedCharacter(event.target.value);
@@ -91,23 +111,23 @@ const MainPage = () => {
   function moviesList() {
     for (let i = 0; i < moviesData.length; i++) {
       fetch(moviesData[i])
-      .then((response) => {
-        return response.json();
-        
-      }).then((movie) => {
-        const objTitle = {
-          name: movie.title,
-        }
-        setMoviesNames((prevState) => {
-          // prevState.push(movie);
+        .then((response) => {
+          return response.json();
+        })
+        .then((movie) => {
+          const objTitle = {
+            name: movie.title,
+          };
+          setMoviesNames((prevState) => {
+            // prevState.push(movie);
 
-          // prevState = ['movie1', 'movie2'];
-          // ...prevState === 'movie1', 'movie2'
+            // prevState = ['movie1', 'movie2'];
+            // ...prevState === 'movie1', 'movie2'
 
-          return [...prevState, objTitle];
-        }); 
-      });
-    };
+            return [...prevState, objTitle];
+          });
+        });
+    }
   }
 
   const style = {
@@ -124,6 +144,7 @@ const MainPage = () => {
     loadPlanetsData();
     sameMoviesFiler();
     moviesList();
+    avatarHandler();
   }, []);
 
   return (
