@@ -1,5 +1,6 @@
 import CardList from "./CardList";
 import MoviesList from "./MoviesList";
+import LoadingSpinner from "./LoadingSpinner";
 import theme from "../theme";
 import { Button, Grid, ThemeProvider } from "@mui/material";
 import React, { useEffect } from "react";
@@ -7,7 +8,11 @@ import { IoPlanetOutline } from "react-icons/io5";
 import { LiaJediOrder } from "react-icons/lia";
 import { TbMovie } from "react-icons/tb";
 import { useState } from "react";
-import { getCharacterAvatarById, getPlanetAvatarById } from "./Avatars";
+import {
+  getCharacterAvatarById,
+  getPlanetAvatarById,
+  getMovieAvatarById,
+} from "./Avatars";
 
 const MainPage = () => {
   const charactersHeader = "Choose the character";
@@ -25,8 +30,7 @@ const MainPage = () => {
   const [selectedPlanet, setSelectedPlanet] = useState(null);
   const [moviesData, setMoviesData] = useState([]);
   const [moviesNames, setMoviesNames] = useState([]);
-  const [characterAvatar, setCharacterAvatar] = useState(null);
-  const [planetAvatar, setPlanetAvatar] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   let foundCharactersMovies = [];
   let foundPlanetsMovies = [];
@@ -35,13 +39,25 @@ const MainPage = () => {
     let allData = [];
     let url = "https://swapi.dev/api/people/";
 
+    setIsLoading(true);
     while (url) {
       const response = await fetch(url);
       const body = await response.json();
-      console.log(allData);
-      allData = allData.concat(body.results);
+      allData = allData.concat(
+        body.results.map((char) => {
+          // if(char.url) {
+          //   char.avatar = getCharacterAvatarById(
+          //     char.url
+          //   );
+          // }
+          // return {char};
+          return { ...char, avatar: getCharacterAvatarById(char.url) };
+        })
+      );
+
       url = body.next;
     }
+    setIsLoading(false);
     setCharactersInfo(allData);
   }
 
@@ -52,28 +68,15 @@ const MainPage = () => {
     while (url) {
       const response = await fetch(url);
       const body = await response.json();
-      allData = allData.concat(body.results);
+      allData = allData.concat(
+        body.results.map((planet) => {
+          return { ...planet, avatar: getPlanetAvatarById(planet.url) };
+        })
+      );
       url = body.next;
     }
     setPlanetsInfo(allData);
   }
-
-  const avatarHandler = () => {
-    const charAvatars = [];
-    const planetsAvatar = [];
-    for (let i = 0; i < charactersInfo.length; i++) {
-      if (charactersInfo[2].url) {
-        console.log(charactersInfo[2].url);
-        console.log(getCharacterAvatarById(charactersInfo[2].url)) // to jest miejsce, gdzie znajduję się zdjęcie 
-        charAvatars.push(readAsDataURL(getCharacterAvatarById(charactersInfo[2].url))); // do array nie mogę dodać 'miejsca', musze stringa dodać 
-      }
-      console.log(charAvatars);
-    }
-    setCharacterAvatar(charAvatars);
-
-    console.log(characterAvatar);
-    console.log(planetAvatar);
-  };
 
   const handleCharactersRadioChange = (event) => {
     setSelectedCharacter(event.target.value);
@@ -84,17 +87,16 @@ const MainPage = () => {
   };
 
   const movieHandler = () => {
+    setIsLoading(true);
     for (let j = 0; j < charactersInfo.length; j++) {
       if (selectedCharacter === charactersInfo[j].name) {
         foundCharactersMovies = charactersInfo[j].films;
-        console.log(foundCharactersMovies);
       }
     }
 
     for (let i = 0; i < planetsInfo.length; i++) {
       if (selectedPlanet === planetsInfo[i].name) {
         foundPlanetsMovies = planetsInfo[i].films;
-        console.log(foundPlanetsMovies);
       }
     }
     sameMoviesFiler();
@@ -105,8 +107,11 @@ const MainPage = () => {
       foundPlanetsMovies.includes(value)
     );
     setMoviesData(filteredMovies);
-    moviesList();
   };
+
+  useEffect(() => {
+    moviesList();
+  }, [moviesData]);
 
   function moviesList() {
     for (let i = 0; i < moviesData.length; i++) {
@@ -117,6 +122,7 @@ const MainPage = () => {
         .then((movie) => {
           const objTitle = {
             name: movie.title,
+            avatar: getMovieAvatarById(movie.url),
           };
           setMoviesNames((prevState) => {
             // prevState.push(movie);
@@ -126,6 +132,7 @@ const MainPage = () => {
 
             return [...prevState, objTitle];
           });
+          setIsLoading(false);
         });
     }
   }
@@ -142,70 +149,77 @@ const MainPage = () => {
   useEffect(() => {
     loadCharactersData();
     loadPlanetsData();
-    sameMoviesFiler();
-    moviesList();
-    avatarHandler();
   }, []);
 
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Grid
-          container
-          justifyContent={"center"}
-          gridTemplateColumns={"1fr 1fr"}
-          gap={"5rem"}
-        >
-          <Grid>
-            <CardList
-              style={style}
-              bgColor={theme.palette.primary.main}
-              itemsData={charactersInfo}
-              header={charactersHeader}
-              description={charactersDescription}
-              icon={<LiaJediOrder />}
-              radioOnChangeHandler={handleCharactersRadioChange}
-            ></CardList>
-          </Grid>
-          <Grid>
-            <CardList
-              style={style}
-              itemsData={planetsInfo}
-              header={planetsHeader}
-              description={planetsDescription}
-              bgColor={theme.palette.secondary.main}
-              icon={<IoPlanetOutline />}
-              radioOnChangeHandler={handlePlanetsRadioChange}
-            ></CardList>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          justifyContent={"center"}
-          gridTemplateColumns={"1fr"}
-          marginTop={"5rem"}
-          marginBottom={"4rem"}
-        >
-          <Button
-            variant="contained"
-            onClick={movieHandler}
-            sx={{
-              backgroundColor: theme.palette.primary.main,
-              borderRadius: "10px",
-            }}
+        <div>
+          <div className={isLoading ? "parentDisable" : ""} width="100%">
+            <div className="overlay-box">
+              {isLoading ? <LoadingSpinner /> : loadCharactersData}
+            </div>
+          </div>
+          <Grid
+            container
+            justifyContent={"center"}
+            gridTemplateColumns={"1fr 1fr"}
+            gap={"5rem"}
           >
-            Search
-          </Button>
-        </Grid>
-        <Grid>
-          <MoviesList
-            style={style}
-            itemsData={moviesNames}
-            icon={<TbMovie />}
-            header={moviesHeader}
-            description={moviesDescription}
-          ></MoviesList>
-        </Grid>
+            <Grid>
+              <CardList
+                cardBoxStyle={style}
+                bgColor={theme.palette.primary.main}
+                itemsData={charactersInfo}
+                header={charactersHeader}
+                description={charactersDescription}
+                icon={<LiaJediOrder />}
+                radioOnChangeHandler={handleCharactersRadioChange}
+              ></CardList>
+            </Grid>
+            <Grid>
+              <CardList
+                cardBoxStyle={style}
+                itemsData={planetsInfo}
+                header={planetsHeader}
+                description={planetsDescription}
+                bgColor={theme.palette.secondary.main}
+                icon={<IoPlanetOutline />}
+                radioOnChangeHandler={handlePlanetsRadioChange}
+              ></CardList>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            justifyContent={"center"}
+            gridTemplateColumns={"1fr"}
+            marginTop={"5rem"}
+            marginBottom={"4rem"}
+          >
+            <Button
+              variant="contained"
+              onClick={movieHandler}
+              disabled={isLoading}
+              sx={{
+                backgroundColor: theme.palette.primary.main,
+                borderRadius: "10px",
+              }}
+            >
+              Search
+            </Button>
+          </Grid>
+          <Grid>
+            <MoviesList
+              spinner={isLoading}
+              handler={movieHandler}
+              cardBoxStyle={style}
+              itemsData={moviesNames}
+              icon={<TbMovie />}
+              header={moviesHeader}
+              description={moviesDescription}
+            ></MoviesList>
+          </Grid>
+        </div>
       </ThemeProvider>
     </>
   );

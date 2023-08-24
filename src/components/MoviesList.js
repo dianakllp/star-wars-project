@@ -1,5 +1,6 @@
 import { Grid } from "@mui/material";
 import { ThemeProvider } from "@mui/material";
+import LoadingSpinner from "./LoadingSpinner";
 import React from "react";
 import CardList from "./CardList";
 import theme from "../theme";
@@ -9,8 +10,9 @@ const MoviesList = (props) => {
     <>
       <ThemeProvider theme={theme}>
         <Grid container justifyContent={"center"} marginBottom={"3rem"}>
+          {props.spinner ? <LoadingSpinner /> : props.handler}
           <CardList
-            style={props.style}
+            cardBoxStyle={props.cardBoxStyle}
             bgColor={theme.palette.primary.main}
             icon={props.icon}
             header={props.header}

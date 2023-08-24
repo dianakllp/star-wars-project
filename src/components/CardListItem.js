@@ -7,6 +7,8 @@ const CardListItem = (props) => {
     <div >
       <ThemeProvider theme={theme}>
         <Avatar
+          src={props.avatar}
+          alt="Avatar"
           sx={{
             display: "inline-block",
             textAlign: "center",

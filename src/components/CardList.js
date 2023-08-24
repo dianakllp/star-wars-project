@@ -14,7 +14,7 @@ const CardList = (props) => {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Box style={props.style} bgcolor={props.bgColor}>
+        <Box style={props.cardBoxStyle} bgcolor={props.bgColor}>
           <Icon
             fontSize="medium"
             sx={{
@@ -60,7 +60,7 @@ const CardList = (props) => {
               >
                 {props.itemsData.map((item, index) => {
                   return (
-                    <CardListItem key={index} name={item.name}></CardListItem>
+                    <CardListItem key={index} name={item.name} avatar={item.avatar}></CardListItem>
                   );
                 })}
               </RadioGroup>
