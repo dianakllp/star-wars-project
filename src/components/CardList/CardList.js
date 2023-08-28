@@ -7,23 +7,16 @@ import {
   FormControl,
   RadioGroup,
 } from "@mui/material";
-import theme from "../theme";
-import CardListItem from "./CardListItem";
+import theme from "../../theme";
+import CardListItem from "../CardListItem/CardListItem";
+import "./cardList.css";
 
 const CardList = (props) => {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Box style={props.cardBoxStyle} bgcolor={props.bgColor}>
-          <Icon
-            fontSize="medium"
-            sx={{
-              marginTop: "0.4rem",
-              marginBottom: "1rem",
-              marginLeft: "10.4rem",
-              marginRight: "10.4rem",
-            }}
-          >
+        <Box className="card-box-style" bgcolor={props.bgColor}>
+          <Icon fontSize="medium" className="box-icon">
             {props.icon}
           </Icon>
           <Typography
@@ -43,24 +36,18 @@ const CardList = (props) => {
             {props.description}
           </Typography>
 
-          <div
-            style={{
-              width: "inherit",
-              display: "inline-block",
-              padding: "0.75rem",
-              overflowY: "scroll",
-              height: "23.5rem",
-              marginBottom: "1rem",
-            }}
-          >
+          <div className="items-container">
             <FormControl sx={{ justifyContent: "end", alignContent: "end" }}>
               <RadioGroup
-                sx={{ justifyContent: "end", alignContent: "end" }}
                 onChange={props.radioOnChangeHandler}
               >
                 {props.itemsData.map((item, index) => {
                   return (
-                    <CardListItem key={index} name={item.name} avatar={item.avatar}></CardListItem>
+                    <CardListItem
+                      key={index}
+                      name={item.name}
+                      avatar={item.avatar}
+                    ></CardListItem>
                   );
                 })}
               </RadioGroup>

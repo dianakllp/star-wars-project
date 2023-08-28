@@ -1,20 +1,17 @@
 import React from "react";
 import { ReactComponent as Logo } from "./logo.svg";
 import { ThemeProvider, Box } from "@mui/material";
-import theme from "../theme";
+import theme from "../../theme";
+import "./header.css";
 
 const Header = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Box
-        width={"9.1rem"}
-        height={"4.6rem"}
-        marginTop={"1.9rem"}
-        marginLeft={"4.06rem"}
-        marginRight={"81.3rem"}
-      >
-        <Logo />
-      </Box>
+      <div className="container">
+        <Box className="header-box">
+          <Logo className="logo" />
+        </Box>
+      </div>
     </ThemeProvider>
   );
 };

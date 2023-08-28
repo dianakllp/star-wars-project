@@ -1,7 +1,7 @@
-import CardList from "./CardList";
-import MoviesList from "./MoviesList";
-import LoadingSpinner from "./LoadingSpinner";
-import theme from "../theme";
+import CardList from "../CardList/CardList";
+import MoviesList from "../MoviesList";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import theme from "../../theme";
 import { Button, Grid, ThemeProvider } from "@mui/material";
 import React, { useEffect } from "react";
 import { IoPlanetOutline } from "react-icons/io5";
@@ -12,7 +12,8 @@ import {
   getCharacterAvatarById,
   getPlanetAvatarById,
   getMovieAvatarById,
-} from "./Avatars";
+} from "../../Avatars";
+import './main.css'
 
 const MainPage = () => {
   const charactersHeader = "Choose the character";
@@ -109,10 +110,6 @@ const MainPage = () => {
     setMoviesData(filteredMovies);
   };
 
-  useEffect(() => {
-    moviesList();
-  }, [moviesData]);
-
   function moviesList() {
     for (let i = 0; i < moviesData.length; i++) {
       fetch(moviesData[i])
@@ -137,19 +134,14 @@ const MainPage = () => {
     }
   }
 
-  const style = {
-    width: "25.75rem",
-    borderRadius: "28px",
-    border: "2px solid #FFF",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  };
-
   useEffect(() => {
     loadCharactersData();
     loadPlanetsData();
   }, []);
+
+  useEffect(() => {
+    moviesList();
+  }, [moviesData]);
 
   return (
     <>
@@ -168,7 +160,6 @@ const MainPage = () => {
           >
             <Grid>
               <CardList
-                cardBoxStyle={style}
                 bgColor={theme.palette.primary.main}
                 itemsData={charactersInfo}
                 header={charactersHeader}
@@ -179,7 +170,6 @@ const MainPage = () => {
             </Grid>
             <Grid>
               <CardList
-                cardBoxStyle={style}
                 itemsData={planetsInfo}
                 header={planetsHeader}
                 description={planetsDescription}
@@ -193,16 +183,15 @@ const MainPage = () => {
             container
             justifyContent={"center"}
             gridTemplateColumns={"1fr"}
-            marginTop={"5rem"}
-            marginBottom={"4rem"}
+            className="grid-container"
           >
             <Button
               variant="contained"
               onClick={movieHandler}
               disabled={isLoading}
+              className="search-button"
               sx={{
                 backgroundColor: theme.palette.primary.main,
-                borderRadius: "10px",
               }}
             >
               Search
@@ -210,9 +199,9 @@ const MainPage = () => {
           </Grid>
           <Grid>
             <MoviesList
+            loader ={<LoadingSpinner /> }
               spinner={isLoading}
               handler={movieHandler}
-              cardBoxStyle={style}
               itemsData={moviesNames}
               icon={<TbMovie />}
               header={moviesHeader}

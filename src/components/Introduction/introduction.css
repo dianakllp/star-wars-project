@@ -1,0 +1,9 @@
+.introduction-text {
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .introduction-text {
+        text-align: center;
+    }
+  }

@@ -1,0 +1,9 @@
+.avatar  {
+    display: inline-block !important;
+    text-align: center !important;
+    overflow: visible !important;
+    margin-right: 0.38rem !important;
+    margin-left: 0.75rem !important;
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.25rem !important;
+}

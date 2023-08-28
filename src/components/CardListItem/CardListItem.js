@@ -1,23 +1,15 @@
 import { Avatar, ThemeProvider, Radio, FormControlLabel } from "@mui/material";
-import theme from "../theme";
+import theme from "../../theme";
+import './cardListItem.css';
 
 const CardListItem = (props) => {
   return (
-
     <div >
       <ThemeProvider theme={theme}>
         <Avatar
           src={props.avatar}
           alt="Avatar"
-          sx={{
-            display: "inline-block",
-            textAlign: "center",
-            overflow: "visible",
-            marginRight: "0.38rem",
-            marginLeft: "0.75rem",
-            marginTop: "0.25rem",
-            marginBottom: "0.25rem",
-          }}
+          className="avatar"
         >
           {props.avatar}
         </Avatar>
