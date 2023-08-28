@@ -1,0 +1,60 @@
+.box-icon {
+    margin-top: 0.4rem;
+    margin-bottom: 1rem;
+    margin-left: 10.4rem;
+    margin-right: 10.4rem
+}
+
+.items-container {
+    width: inherit;
+    display: inline-block;
+    padding: 0.75rem;
+    overflow-y: scroll;
+    height: 23.5rem;
+    margin-bottom: 1rem
+}
+
+@media (max-width: 768px) {
+    .box-icon {
+        margin-top: 0.2rem;
+        margin-bottom: 0.13rem;
+        margin-left: 7.2rem;
+        margin-right: 7.2rem
+    }
+    .items-container {
+        width: inherit;
+        display: inline-block;
+        padding: 0.75rem;
+        overflow-y: scroll;
+        height: 19.4rem;
+        margin-bottom: 0.7rem
+    }
+  }
+
+@media (max-width: 576px) {
+    .box-icon {
+        margin-top: 0.3rem;
+        margin-bottom: 1.13rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .items-container {
+        width: inherit;
+        display: inline-block;
+        padding-left: 3rem;
+        overflow-y: scroll;
+        height: 23.4rem;
+        margin-bottom: 1.7rem; 
+        margin-left: 1.7rem; 
+        margin-right: 1.7rem; 
+    }
+  }
+  .card-box-style {
+    width: 25.75rem;
+    border-radius: 28px;
+    border: 2px solid #FFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+}

@@ -7,39 +7,23 @@ import {
   FormControl,
   RadioGroup,
 } from "@mui/material";
-import theme from "../theme";
-import CardListItem from "./CardListItem";
+import theme from "../../theme";
+import CardListItem from "../CardListItem/CardListItem";
+import "./cardList.css";
 
 const CardList = (props) => {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Box
-          sx={{
-            width: "25.75rem",
-            borderRadius: "28px",
-            border: "2px solid #FFF;",
-            bgcolor: props.bgColor,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Icon
-            fontSize="medium"
-            sx={{
-              marginTop: "0.4rem",
-              marginBottom: "1rem",
-              marginLeft: "10.4rem",
-              marginRight: "10.4rem",
-            }}
-          >
+        <Box className="card-box-style" bgcolor={props.bgColor}>
+          <Icon fontSize="medium" className="box-icon">
             {props.icon}
           </Icon>
           <Typography
             variant="h5"
             lineHeight={"2rem"}
             letterSpacing={"0.01563rem"}
+            textAlign={"center"}
           >
             {props.header}
           </Typography>
@@ -52,24 +36,17 @@ const CardList = (props) => {
             {props.description}
           </Typography>
 
-          <div
-            style={{
-              width: "inherit",
-              display: "inline-block",
-              padding: "0.75rem",
-              overflowY: "scroll",
-              height: "23.5rem",
-              marginBottom: "1rem",
-            }}
-          >
-            <FormControl>
-              <RadioGroup>
+          <div className="items-container">
+            <FormControl sx={{ justifyContent: "end", alignContent: "end" }}>
+              <RadioGroup
+                onChange={props.radioOnChangeHandler}
+              >
                 {props.itemsData.map((item, index) => {
                   return (
                     <CardListItem
                       key={index}
                       name={item.name}
-                      // avatar={item.avatar}
+                      avatar={item.avatar}
                     ></CardListItem>
                   );
                 })}
