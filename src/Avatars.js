@@ -1,7 +1,7 @@
 import LukeLogo from "./AvatarsImages/luke.png";
 import C_3POLogo from "./AvatarsImages/C-3PO.png";
 import LeiaLogo from "./AvatarsImages/princess-leia.png";
-import R2_D2Logo from "./AvatarsImages/R2-D2.png";
+import R2_D2Logo from "./AvatarsImages/r2-d2.png";
 import Darth_VaiderLogo from "./AvatarsImages/DarthVaider.png";
 import Owen_LarsLogo from "./AvatarsImages/OwenLars.png";
 import R5_D4Logo from "./AvatarsImages/R5_D4.webp";
@@ -50,6 +50,9 @@ import Attack_of_the_ClonesLogo from "./AvatarsImages/Attack_of_the_Clones.webp"
 import Revenge_of_the_SithLogo from "./AvatarsImages/Revenge_of_the_Sith.webp";
 import Mon_MothmaLogo from "./AvatarsImages/Mon_Mothma.webp";
 import KaminoLogo from "./AvatarsImages/Kamino.webp";
+import JarJarBinksLogo from "./AvatarsImages/JarJarBinks.png";
+import Roos_TarpalsLogo from "./AvatarsImages/Roos_Tarpals.webp";
+import BossnassLogo from "./AvatarsImages/Bossnass.webp";
 
 const charactersAvatars = {
   "https://swapi.dev/api/people/1/": LukeLogo,
@@ -84,6 +87,9 @@ const charactersAvatars = {
   "https://swapi.dev/api/people/32/": Qui_Gon_JinnLogo,
   "https://swapi.dev/api/people/33/": NuteGunrayLogo,
   "https://swapi.dev/api/people/35/": PadméAmidalaLogo,
+  "https://swapi.dev/api/people/36/": JarJarBinksLogo,
+  "https://swapi.dev/api/people/37/": Roos_TarpalsLogo,
+  "https://swapi.dev/api/people/38/": BossnassLogo,
 };
 
 export const getCharacterAvatarById = (id) => {
@@ -112,9 +118,9 @@ export const getPlanetAvatarById = (id) => {
 };
 
 const moviesAvatars = {
-  "https://swapi.dev/api/films/1/": A_New_HopeLogo, 
-  "https://swapi.dev/api/films/2/": The_Empire_Strikes_BackLogo, 
-  "https://swapi.dev/api/films/3/": Return_of_the_JediLogo, 
+  "https://swapi.dev/api/films/1/": A_New_HopeLogo,
+  "https://swapi.dev/api/films/2/": The_Empire_Strikes_BackLogo,
+  "https://swapi.dev/api/films/3/": Return_of_the_JediLogo,
   "https://swapi.dev/api/films/4/": The_Phantom_MenaceLogo,
   "https://swapi.dev/api/films/5/": Attack_of_the_ClonesLogo,
   "https://swapi.dev/api/films/6/": Revenge_of_the_SithLogo,
